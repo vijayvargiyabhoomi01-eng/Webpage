@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hospital Management System - Portals</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: #eef2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: #ffffff;
+            width: 400px;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .tabs {
+            display: flex;
+            margin-bottom: 25px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 10px;
+            text-align: center;
+            background: none;
+            border: none;
+            font-size: 15px;
+            font-weight: bold;
+            color: #777;
+            cursor: pointer;
+            outline: none;
+        }
+
+        .tab-btn.active {
+            color: #007bff;
+            border-bottom: 3px solid #007bff;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            color: #333;
+            margin-bottom: 6px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 12px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+
+        .form-section {
+            display: none;
+        }
+
+        .form-section.active {
+            display: block;
+        }
+
+        .status-msg {
+            margin-top: 15px;
+            font-size: 14px;
+            text-align: center;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="tabs">
+        <button class="tab-btn active" onclick="switchTab('user-login', this)">General Login</button>
+        <button class="tab-btn" onclick="switchTab('staff-login', this)">Staff Login</button>
+    </div>
+
+    <!-- General User Login Form -->
+    <div id="user-login" class="form-section active">
+        <h2 style="text-align: center; margin-bottom: 20px; color: #333;">System Login</h2>
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" id="username" placeholder="Enter Username">
+        </div>
+        <div class="form-group">
+            <label for="user-password">Password</label>
+            <input type="password" id="user-password" placeholder="Enter Password">
+        </div>
+        <button class="btn" onclick="handleUserLogin()">Login</button>
+        <div id="user-msg" class="status-msg"></div>
+    </div>
+
+    <!-- Hospital Staff Login Form -->
+    <div id="staff-login" class="form-section">
+        <h2 style="text-align: center; margin-bottom: 20px; color: #333;">Hospital Staff Portal</h2>
+        <div class="form-group">
+            <label for="staff-id">Staff ID</label>
+            <input type="text" id="staff-id" placeholder="e.g., DOC101 or NUR201">
+        </div>
+        <div class="form-group">
+            <label for="staff-password">Password</label>
+            <input type="password" id="staff-password" placeholder="Enter Password">
+        </div>
+        <button class="btn" onclick="handleStaffLogin()">Login to Portal</button>
+        <div id="staff-msg" class="status-msg"></div>
+    </div>
+</div>
+
+<script>
+    function switchTab(tabId, element) {
+        document.querySelectorAll('.form-section').forEach(el => el.classList.remove('active'));
+        document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+        document.getElementById(tabId).classList.add('active');
+        element.classList.add('active');
+    }
+
+    function handleUserLogin() {
+        const user = document.getElementById('username').value;
+        const pass = document.getElementById('user-password').value;
+        const msg = document.getElementById('user-msg');
+
+        if (user === "admin" && pass === "admin123") {
+            msg.style.color = "green";
+            msg.innerText = "Login Successful! Welcome, " + user + ".";
+        } else {
+            msg.style.color = "red";
+            msg.innerText = "Invalid Username or Password. Access Denied.";
+        }
+    }
+
+    function handleStaffLogin() {
+        const id = document.getElementById('staff-id').value;
+        const pass = document.getElementById('staff-password').value;
+        const msg = document.getElementById('staff-msg');
+
+        if (id === "DOC101" && pass === "docpass") {
+            msg.style.color = "green";
+            msg.innerText = "Access Granted: Welcome, Dr. " + id + ". Redirecting to Doctor Dashboard.";
+        } else if (id === "NUR201" && pass === "nurpass") {
+            msg.style.color = "green";
+            msg.innerText = "Access Granted: Welcome, Nurse " + id + ". Redirecting to Nursing Station.";
+        } else {
+            msg.style.color = "red";
+            msg.innerText = "Authentication Failed: Invalid Staff ID or Password.";
+        }
+    }
+</script>
+
+</body>
+</html>
